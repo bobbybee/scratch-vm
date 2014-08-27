@@ -19,7 +19,7 @@ TYPE	| OPCODE FORMAT	| BEHAVIOR
 0-1		| CAG %b	| Loads address to address register
 2-3		| CAG %s	|
 4-5		| CAG %a	| Dereferences address, and loads resulting address to address register
-6-7		| CAG %s	|
+6-7		| CAG %r	|
 8		| PUSH %i	| Pushes value to stack, decrementing SP
 9		| PUSH %c	|
 10		| POP %c	| Pops a value from stack, incrementing SP
@@ -29,3 +29,6 @@ TYPE	| OPCODE FORMAT	| BEHAVIOR
 14		| SUB %c, %c	|
 15		| MUL %c, %c	|
 16		| DIV %c, %c	|
+17		| JMP %b	| Unconditional jump
+18		| BRZZ %b, %c	| Jump if value is zero
+19		| BRS %b, %c	| Jump if value is less than zero
