@@ -10,6 +10,8 @@ var memory = new Array(parseInt(process.argv[3])+1).join('0').split('');
 
 var program = fs.readFileSync(process.argv[4]).toString().split('\n');
 
-memory = memory.slice(0, process.argv[5]).concat(program).concat(memory.slice(1+program.length));
+var entrypoint = parseInt(process.argv[5]);
+
+memory = memory.slice(0, entrypoint).concat(program).concat(memory.slice(1+program.length+entrypoint));
 
 fs.writeFileSync(process.argv[2], memory.join("\n"), "utf8");
