@@ -30,5 +30,6 @@ TYPE	| OPCODE FORMAT	| BEHAVIOR
 15		| MUL %c, %c	|
 16		| DIV %c, %c	|
 17		| JMP %b	| Unconditional jump
-18		| BRZZ %b, %c	| Jump if value is zero
+18		| BRZ %b, %c	| Jump if value is zero
 19		| BRS %b, %c	| Jump if value is less than zero
+20		| HLT 			| Halt virtual machine
