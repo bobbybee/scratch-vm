@@ -34,4 +34,6 @@ TYPE	| OPCODE FORMAT	| BEHAVIOR
 19		| BRS %b, %c	| Jump if value is less than zero
 20		| HLT 			| Halt virtual machine
 21		| CALL %b		| Pushes the PC to the stack and jumps to the function
-22		| RET			| Jumps to the address at the top of the stack
+22		| RET			| Jumps to the address at the top of the stack, increasing the stack pointer
+23		| RET %i		| Same as RET, however, it also pushes the operand
+24		| RET %c		|
