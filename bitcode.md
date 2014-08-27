@@ -16,13 +16,13 @@ CAG is used to compute an address based on some other VM value.
 The resulting address is loaded into an address register to be used by some instructions.
 
 TYPE	| OPCODE FORMAT	| BEHAVIOR
-0-1		| CAG %b	 	| Loads address to address register
-2-3		| CAG %s		|
-4-5		| CAG %a		| Dereferences address, and loads resulting address to address register
-6-7		| CAG %s		|
-8		| PUSH %i		| Pushes value to stack, decrementing SP
-9		| PUSH %c		|
-10		| POP %c		| Pops a value from stack, incrementing SP
+0-1		| CAG %b	| Loads address to address register
+2-3		| CAG %s	|
+4-5		| CAG %a	| Dereferences address, and loads resulting address to address register
+6-7		| CAG %s	|
+8		| PUSH %i	| Pushes value to stack, decrementing SP
+9		| PUSH %c	|
+10		| POP %c	| Pops a value from stack, incrementing SP
 11		| LOAD %c, %i	| Loads value to memory
 12		| LOAD %c, %c	| DMA.
 13		| ADD %c, %c	| Loads value from former operand, performs arithmetic using latter operand, and stores value in former operand
