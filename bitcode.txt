@@ -37,3 +37,7 @@ TYPE	| OPCODE FORMAT	| BEHAVIOR
 22		| RET			| Jumps to the address at the top of the stack, increasing the stack pointer
 23		| RET %i		| Same as RET, however, it also pushes the operand
 24		| RET %c		|
+25		| OUT %i		| Outputs the given character to the TTY output device. This can be an ASCII character or the numeric representation of an ASCII character.
+26		| OUT %c		|
+27		| BIN %b		| Branch if data is waiting
+28		| IN %c			| Reads character from buffer
