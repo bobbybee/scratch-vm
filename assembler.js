@@ -3,9 +3,9 @@ var source = fs.readFileSync(process.argv[2]).toString().split("\n");
 var entrypoint = parseInt(process.argv[3]) || 0;
 
 var regexs = {
-	noOperand: /^\s*([^\n\s#]+)/,
-	singleOperand: /^\s*([^ ]+) ([^\n\s#]+)/,
-	dualOperand: /^\s*([^ ]+) ([^,]+), ([^\n\s#]+)/,
+	noOperand: /^\s*([^\n\s;]+)/,
+	singleOperand: /^\s*([^ ]+) ([^\n\s;]+)/,
+	dualOperand: /^\s*([^ ]+) ([^,]+), ([^\n\s;]+)/,
 	label: /^\s*([^:]+):/
 }
 
@@ -31,11 +31,11 @@ function isImmediate(potential) {
 }
 
 function parseImmediate(imm) {
-	return potential[0] == "#" ? potential.slice(1) : 0;
+	return imm[0] == "#" ? imm.slice(1) : 0;
 }
 
 function parseAddress(addr) {
-	return potential[0] == "$" ? parseInt(potential.slice(1), 16) : 0;
+	return addr[0] == "$" ? parseInt(addr.slice(1), 16) : 0;
 }
 
 var instructions = [];
@@ -51,7 +51,7 @@ for(var i = 0; i < source.length; ++i) {
 		labels[line.match(regexs.label)[1]] = programCounter;
 	} else if(regexs.dualOperand.test(line)) {
 		var match = line.match(regexs.dualOperand);
-		
+				
 		if(match[1] == "CAG") {
 			programCounter += 2;
 		} else {
@@ -93,7 +93,7 @@ for(i = 0; i < instructions.length; ++i) {
 	} else if(instructions[i] == "JMP") {
 		output = output.concat([17, labels[instructions[++i]]]);
 	} else if(basicBranch[instructions[i]]) {
-		output = output.concat([basicBranch[instructions[i]], parseAddress(instructions[++i]), addressRegister[instructions[++i]]]);
+		output = output.concat([basicBranch[instructions[i]], labels[instructions[++i]], addressRegister[instructions[++i]]]);
 	} else if(arithmeticInstructions[instructions[i]]) {
 		output = output.concat([arithmeticInstructions[instructions[i]], addressRegister[instructions[++i]], addressRegister[instructions[++i]]]);
 	} else if(instructions[i] == "HLT") {
