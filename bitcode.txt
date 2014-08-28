@@ -17,8 +17,7 @@ The resulting address is loaded into an address register to be used by some inst
 
 TYPE	| OPCODE FORMAT	| BEHAVIOR
 0-1		| CAG %b	| Loads address to address register
-2		| RESERVED 	| RESERVED
-3		| RESERVED	| RESERVED
+2-3		| CAG %i	| Loads (sp+imm) to address register
 4-5		| CAG %c	| Address by dereferencing another address (NOT IMPLEMENTED)
 6		| RESERVED 	| RESERVED
 7		| RESERVED	| RESERVED
@@ -36,7 +35,7 @@ TYPE	| OPCODE FORMAT	| BEHAVIOR
 19		| BRS %b, %c	| Jump if value is less than zero
 20		| HLT 			| Halt virtual machine
 21		| CALL %b		| Pushes the PC to the stack and jumps to the function
-22		| RET			| Jumps to the address at the top of the stack, increasing the stack pointer
+22		| RET NONE		| Jumps to the address at the top of the stack, increasing the stack pointer
 23		| RET %i		| Same as RET, however, it also pushes the operand
 24		| RET %c		|
 25		| OUT %i		| Outputs the given character to the TTY output device. This can be an ASCII character or the numeric representation of an ASCII character.
