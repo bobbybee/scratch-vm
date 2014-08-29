@@ -6,7 +6,8 @@ var regexs = {
 	noOperand: /^\s*([^\n\s;]+)/,
 	singleOperand: /^\s*([^ ]+) ([^\n\s;]+)/,
 	dualOperand: /^\s*([^ ]+) ([^,]+), ([^\n\s;]+)/,
-	label: /^\s*([^:]+):/
+	label: /^\s*([^:]+):/,
+	inlineMathAddress: /\[([^\+\-]+)(\+|\-)(\d+)\]/
 }
 
 var addressRegister = {
@@ -75,6 +76,16 @@ for(i = 0; i < instructions.length; ++i) {
 		if(instructions[i+2][0] == "$") {
 			output = output.concat([0 + addressRegister[instructions[i+1]], parseInt(instructions[i+2].slice(1), 16)]);
 			i += 2;
+		} else if(regexs.inlineMathAddress.test(instructions[i+2])) {
+			var imath = instructions[i+2].match(regexs.inlineMathAddress);
+			
+			if(imath[1] == "sp") {
+				console.log("SP Math");
+				output = output.concat([2 + addressRegister[instructions[i+1]], imath[3] * (imath[2] == '+' ? 1 : -1)]);
+				i += 2;
+			}
+			
+			console.log(imath);
 		}
 	} else if(instructions[i] == "PUSH") {
 		if(isImmediate(instructions[i+1])) {
