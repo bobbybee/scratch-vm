@@ -17,7 +17,7 @@ The resulting address is loaded into an address register to be used by some inst
 
 TYPE	| OPCODE FORMAT	| BEHAVIOR
 0-1		| CAG %b	| Loads address to address register
-2-3		| CAG %i	| Loads (sp+imm) to address register
+2-3		| CAG [sp+%i]| Loads (sp+imm) to address register
 4-5		| CAG %c	| Address by dereferencing another address (NOT IMPLEMENTED)
 6		| RESERVED 	| RESERVED
 7		| RESERVED	| RESERVED
@@ -42,3 +42,4 @@ TYPE	| OPCODE FORMAT	| BEHAVIOR
 26		| OUT %c		|
 27		| BIN %b		| Branch if data is waiting
 28		| IN %c			| Reads character from buffer
+29		| ALC %i		| sp += imm, used for allocation on stack
