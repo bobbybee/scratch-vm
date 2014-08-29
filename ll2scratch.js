@@ -57,7 +57,24 @@ for(var i = 0; i < input.length; ++i) {
 			currentFunction.name = f_name;
 			currentFunction.returnType = match[1];
 			
-			// TODO: parse arguments
+			var argString = match[3];
+			
+			currentFunction.arguments = []; // not sure what the issue was, but it seems to make node happy
+			
+			if(argString.length) { // ensuring argument length fixes many, many potential bugs down the line
+				var arguments = argString.split(',');
+				
+				console.log(arguments);
+				
+				for(var a = 0; a < arguments.length; ++a) {
+					var type_name = arguments[a].trim().split(' ');
+					
+					currentFunction.arguments.push({
+						name: type_name[1],
+						type: type_name[0]
+					});
+				}
+			}
 			
 			output.push(currentFunction.name+":");
 			
@@ -110,8 +127,9 @@ function evaluateExpression(dest, expression) {
 			var a = match[4];
 			var b = match[5];
 			
-			loadPrimitive(0, a);
-			loadPrimitive(1, b);
+			loadPrimitive(0, a); // TODO: dynamically allocate virtual registers
+			loadPrimitive(1, b); // TODO pt 2: add more address registers for optimization
+			output.push("ADD A0, A1"); 
 			
 			break;
 		}
@@ -127,16 +145,22 @@ function loadPrimitive(addressRegister, value) {
 	
 	if(value[0] == "%") {
 		// local variable
-		
-		var nam = value.slice(1);
-		
-		// first check the arguments
+				
+		// first check the arguments for the source
 		var args = currentFunction.arguments;
 		for(var i = 0; i < args.length; ++i) {
-			if(args[i] == nam) {
+			if(args[i].name == value) {
 				output.push("CAG A"+addressRegister+", [sp-"+(args.length-i)+"]");
 			}
 		}
+	} else {
+		// numeric
+		
+		// first create a virtual register
+		output.push("CAG A"+addressRegister+", "+ (addressRegister + 0)); // TODO: virtual register offset
+		
+		// next, populate it
+		output.push("LOAD A"+addressRegister+", "+value);
 	}
 	
 }
