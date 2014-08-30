@@ -217,16 +217,8 @@ function evaluateInstruction(expression) {
 				
 				// TODO: optimize immediate returns to use opcode 23, which is much faster
 				// TODO: non-primitive return types
-				
-				// allocate a temporary register
-				allocTempRegister(0);
-							
-				// load reference to return value				
-				loadPrimitive(1, match[3]);
-				
-				output.push("LOAD A0, A1"); // and use DMA to finish up
-				
-				// cleanup stack, now that the return value is safely hidden away
+				// TODO: find a safer way to do this than stack hacking
+
 				if(toDealloc > 0) 
 					output.push("ALC "+toDealloc);
 				
