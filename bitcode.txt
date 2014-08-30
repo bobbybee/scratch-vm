@@ -43,3 +43,4 @@ TYPE	| OPCODE FORMAT	| BEHAVIOR
 27		| BIN %b		| Branch if data is waiting
 28		| IN %c			| Reads character from buffer
 29		| ALC %i		| sp += imm, used for allocation on stack
+30		| FRV %c		| Fetchs the return value of the last called function, and puts it into the resulting addressing register
