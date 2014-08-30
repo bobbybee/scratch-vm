@@ -218,6 +218,8 @@ function evaluateInstruction(expression) {
 				// TODO: optimize immediate returns to use opcode 23, which is much faster
 				// TODO: non-primitive return types
 				// TODO: find a safer way to do this than stack hacking
+				
+				loadPrimitive(0, match[3]);
 
 				if(toDealloc > 0) 
 					output.push("ALC "+toDealloc);
