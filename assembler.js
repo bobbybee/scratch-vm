@@ -80,7 +80,6 @@ for(i = 0; i < instructions.length; ++i) {
 			var imath = instructions[i+2].match(regexs.inlineMathAddress);
 			
 			if(imath[1] == "sp") {
-				console.log("SP Math");
 				output = output.concat([2 + addressRegister[instructions[i+1]], imath[3] * (imath[2] == '+' ? 1 : -1)]);
 				i += 2;
 			}
@@ -130,6 +129,10 @@ for(i = 0; i < instructions.length; ++i) {
 		output = output.concat([27, labels[instructions[++i]]]);
 	} else if(instructions[i] == "IN") {
 		output = output.concat([28, addressRegister[instructions[++i]]]);
+	} else if(instructions[i] == "ALC") {
+		output = output.concat([29, instructions[++i]]);
+	} else if(instructions[i] == "FRV") {
+		output = output.concat([30, addressRegister[instructions[++i]]]);
 	} else {
 		console.log("Unknown instruction: "+instructions[i]);
 	}
