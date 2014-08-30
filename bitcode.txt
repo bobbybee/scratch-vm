@@ -22,7 +22,7 @@ TYPE	| OPCODE FORMAT	| BEHAVIOR
 6		| RESERVED 	| RESERVED
 7		| RESERVED	| RESERVED
 8		| PUSH %i	| Pushes value to stack, decrementing SP
-9		| PUSH %c	|
+9		| PUSH %c	| Pushes address of the pointer to stack, decrementing SP
 10		| POP %c	| Pops a value from stack, incrementing SP
 11		| LOAD %c, %i	| Loads value to memory
 12		| LOAD %c, %c	| DMA.
