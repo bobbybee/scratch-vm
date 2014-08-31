@@ -48,7 +48,10 @@ var programCounter = entrypoint;
 for(var i = 0; i < source.length; ++i) {
 	var line = source[i];
 	
-	if(regexs.label.test(line)) {		
+	if(line[0] == ";") {
+		// this is a comment
+		// do nothing
+	} else if(regexs.label.test(line)) {		
 		labels[line.match(regexs.label)[1]] = programCounter;
 	} else if(regexs.dualOperand.test(line)) {
 		var match = line.match(regexs.dualOperand);
