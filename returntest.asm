@@ -1,9 +1,9 @@
-; equilalent C code
+; equivalent C code
 ; void start() {
 ; 	put(letter(26));
 ; }
 ;
-; void letter(int n) {
+; int letter(int n) {
 ;	return n + 64;
 ; }
 
@@ -21,4 +21,4 @@ CAG A0, $FF
 LOAD A0, #64
 CAG A1, [sp+2]
 ADD A0, A1
-RET A0
+RET A0, #1
