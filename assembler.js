@@ -91,11 +91,17 @@ for(i = 0; i < instructions.length; ++i) {
 	} else if(instructions[i] == "PUSH") {
 		if(isImmediate(instructions[i+1])) {
 			output = output.concat([8, parseImmediate(instructions[++i])]);
+		} else if(instructions[i+1][0] == "[") {
+			output = output.concat([33, addressRegister[instructions[++i].slice(1,-1)]]);
 		} else {
 			output = output.concat([9, addressRegister[instructions[++i]]]);
 		}
 	} else if(instructions[i] == "POP") {
-		output = output.concat([10, addressRegister[instructions[++i]]]);
+		if(instructions[i+1][0] == "[") {
+			output = output.concat([34, addressRegister[instructions[++i].slice(1,-1)]]);
+		} else {
+			output = output.concat([10, addressRegister[instructions[++i]]]);
+		}
 	} else if(instructions[i] == "LOAD") {
 		if(isImmediate(instructions[i+2])) {
 			output = output.concat([11, addressRegister[instructions[++i]], parseImmediate(instructions[++i])]);
