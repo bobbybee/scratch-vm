@@ -44,3 +44,5 @@ TYPE	| OPCODE FORMAT	| BEHAVIOR
 28		| IN %c			| Reads character from buffer
 29		| ALC %i		| sp += imm, used for allocation on stack
 30		| FRV %c		| Fetchs the return value of the last called function, and puts it into the resulting addressing register
+31		| RET %i, %i	| See opcode 23. Returns, pushes 1st operand, and pops 2nd operand cells from the stack
+32		| RET %c, %i	|
