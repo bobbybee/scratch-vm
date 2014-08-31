@@ -133,7 +133,7 @@ function evaluateExpression(destMap, destName, expression) {
 	var instruction = expression.trim().split(' ')[0];
 	
 	if(instruction == "tail" || instruction == "musttail" || instruction == "call") {
-		finishExpression(destMap, destName, callInstruction(expression));
+		finishExpression(destMap, destName, callInstruction(expression, destName));
 		return;
 	}
 	
@@ -204,7 +204,7 @@ function evaluateInstruction(expression) {
 		{
 			console.log("ret instruction");
 			
-			var toDealloc = currentFunction.stackSize - 1;
+			var toDealloc = currentFunction.stackSize + Object.keys(currentFunction.localVariables).length - 1;
 			
 			
 			if(match[1] == "void") {
@@ -217,15 +217,14 @@ function evaluateInstruction(expression) {
 				
 				// TODO: optimize immediate returns to use opcode 23, which is much faster
 				// TODO: non-primitive return types
-				// TODO: find a safer way to do this than stack hacking
 				
 				loadPrimitive(0, match[3]);
 
 				if(toDealloc > 0) 
-					output.push("ALC "+toDealloc);
+					output.push("RET A0, "+toDealloc);
+				else
+					output.push("RET A0");
 				
-				
-				output.push("RET A0");
 			}
 			
 			break;
@@ -250,7 +249,7 @@ function evaluateInstruction(expression) {
 	}
 }
 
-function callInstruction(expression) {
+function callInstruction(expression, isAssigned) {
 	var match = expression.match(regexs.instructionRegexs.call); 
 	
 	console.log(match);
@@ -286,13 +285,10 @@ function callInstruction(expression) {
 	
 	output.push("CALL "+(funcName.slice(1)));
 		
-	// pop registers
-	// TODO: optimize me
-	output.push("POP A1"); // our saved A1
-	output.push("POP A0");
+	if(isAssigned) {
+		output.push("FRV A0");
+	}
 	
-	console.log(args);
-
 	
 	// TODO: support more versions of call
 }
