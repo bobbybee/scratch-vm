@@ -84,7 +84,6 @@ for(i = 0; i < instructions.length; ++i) {
 				i += 2;
 			}
 			
-			console.log(imath);
 		}
 	} else if(instructions[i] == "PUSH") {
 		if(isImmediate(instructions[i+1])) {
@@ -111,13 +110,21 @@ for(i = 0; i < instructions.length; ++i) {
 	} else if(instructions[i] == "CALL") {
 		output = output.concat([21, labels[instructions[++i]]]);
 	} else if(instructions[i] == "RET") {
-		if(instructions[i+1] == "NONE") {
-			output = output.concat([22]);
-			++i;
-		} else if(isImmediate(instructions[i+1])) {
-			output = output.concat([23, parseImmediate(instructions[++i])]);
+		if(instructions[i+2]) {
+			if(isImmediate(instructions[i+1])) {
+				output = output.concat([31, parseImmediate(instructions[++i]), parseImmediate(instructions[++i])]);
+			} else {
+				output = output.concat([32, addressRegister[instructions[++i]], parseImmediate(instructions[++i])]);
+			}
 		} else {
-			output = output.concat([24, addressRegister[instructions[++i]]]);
+			if(instructions[i+1] == "NONE") {
+				output = output.concat([22]);
+				++i;
+			} else if(isImmediate(instructions[i+1])) {
+				output = output.concat([23, parseImmediate(instructions[++i])]);
+			} else {
+				output = output.concat([24, addressRegister[instructions[++i]]]);
+			}
 		}
 	} else if(instructions[i] == "OUT") {
 		if(isImmediate(instructions[i+1])) {
