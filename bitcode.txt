@@ -46,3 +46,5 @@ TYPE	| OPCODE FORMAT	| BEHAVIOR
 30		| FRV %c		| Fetchs the return value of the last called function, and puts it into the resulting addressing register
 31		| RET %i, %i	| See opcode 23. Returns, pushes 1st operand, and pops 2nd operand cells from the stack
 32		| RET %c, %i	|
+33		| PUSH [%c]		| Pushes the dereferenced value of the address register to the stack.
+34		| POP [%c]		| Pops from the stack and writes it to memory at the address specified by the specified address register.
